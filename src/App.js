@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import Chat from './pages/Chat';
+import Login from './pages/Login'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import {SocketContext, socket} from './contexts/socket';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SocketContext.Provider value={socket}>
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+            <Router>
+              <Switch>
+                <Route path="/chat" component={Chat}/>
+                <Route exact path="/" component={Login}/>
+              </Switch>
+            </Router>
+    </SocketContext.Provider>
   );
 }
 
